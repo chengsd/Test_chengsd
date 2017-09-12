@@ -1,9 +1,0 @@
-<!--初始化一个警告框-->
-    <div class="alert {% block alert-class %}{% endblock %}" id="{% block alarm_type_id %}{% endblock %}" style="display: none;padding:8px 5px">
-        <strong id="{% block alarm_title %}{% endblock %}"></strong>&nbsp&nbsp&nbsp<span id="{% block alarm_content %}{% endblock %}"></span>
-    </div>
-<div style="padding: 20px 50px 10px">
-
-{% block content %}{% endblock %} <!--修改或添加模态框内容-->
-{% block content-details %}{% endblock %}  <!--已部署应用详情模态框内容-->
-</div>
