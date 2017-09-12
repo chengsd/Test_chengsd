@@ -1,0 +1,78 @@
+{% extends 'alarm.html' %}
+<div id="alarm_container">
+    {% block alert-class %}{% endblock %}
+    {% block alarm_type_id %}alarm_type_id{% endblock %}
+    {% block alarm_title %}alarm_title{% endblock %}
+    {% block alarm_content %}alarm_content{% endblock %}
+</div>
+{% block content %}
+    <form  class="bs-example bs-example-form" role="form">
+        <div class="input-group" style="display:none"><!--默认不显示id，方便修改-->
+            <span class="input-group-addon">id</span>
+            <input type="text" class="form-control modify_info" id="id" placeholder="id">
+        </div>
+        <div class="input-group">
+            <span class="input-group-addon">IP地址</span>
+            <input type="text" class="form-control modify_info" id="ip_address" placeholder="IP地址">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">MAC地址</span>
+            <input type="text" class="form-control modify_info" id="mac_address" placeholder="MAC地址">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">CPU信息</span>
+            <input type="text" class="form-control modify_info" id="cpu_info" placeholder="CPU信息">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">内存信息</span>
+            <input type="text" class="form-control modify_info" id="memory_info" placeholder="内存信息">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">磁盘信息</span>
+            <input type="text" class="form-control modify_info" id="disk_info" placeholder="磁盘信息">
+        </div>
+        <br>
+        <div class="input-group">
+            <span class="input-group-addon">操作系统</span>
+            <input type="text" class="form-control modify_info" id="system" placeholder="操作系统">
+        </div>
+        <div class="input-group" style="display: none">
+            <span class="input-group-addon">已部署应用</span>
+            <input type="text" class="form-control modify_info" id="application" placeholder="已部署应用">
+        </div>
+        <br>
+        <div>
+            <span class="form-control" style="text-align: center;background: rgb(238, 238, 238)">已部署应用(<span style="color: red;">点击相应按钮删除
+            </span>)
+                <a href="#" title="新应用" style="float: right;" id="add_application">点此添加+
+                </a>
+            </span>
+            <!--应用列表展示-->
+            <div id="modify_application">
+                <!--<button type="button" class="btn btn-primary" style="margin-top: 3px">10086</button>-->
+            </div>
+        </div>
+        <br>
+        <div class="input-group" style="display: none">
+            <span class="input-group-addon">机器类型</span>
+            <input type="text" class="form-control modify_info" id="machine_type" placeholder="机器类型">
+        </div>
+        <span class="form-control" style="text-align: center;background: rgb(238, 238, 238)">机器类型</span>
+        <span style="color: green;">
+            <input type="checkbox" name="check_box_machine_type" id="machine_type_online" value="线上环境">线上环境
+            <input type="checkbox" name="check_box_machine_type" id="machine_type_test" value="测试环境">测试环境
+            <input type="checkbox" name="check_box_machine_type" id="machine_type_dev" value="开发环境">开发环境
+            <input type="checkbox" name="check_box_machine_type" id="machine_type_other" >其他
+            <input type="text" id="machine_type_other_value" name="check_box_machine_type">
+        </span>
+        <br><br>
+        <div class="input-group">
+            <span class="input-group-addon">备注</span>
+            <input type="text" class="form-control modify_info" id="mark_info" placeholder="备注">
+        </div>
+    </form>
+{% endblock %}

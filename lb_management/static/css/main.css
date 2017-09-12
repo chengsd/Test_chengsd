@@ -1,0 +1,15 @@
+body{background: rgb(248, 248, 248)}
+.table_data{padding: 0px 10px 5px 10px;}
+.btn-app{float:right;}
+th{text-align: center}/*解决表格th居中*/
+.nav-luban{padding-left:10px;background:#EDEDED}
+#nav-title{font-weight:bold;color:black}
+.search-div{float:right;padding-right: 10px}
+.mod_del{width:100%;padding-top:0;padding-left:10px}
+.table{margin-bottom:0px}
+.modify_info{text-align: center;}
+#title_name,#title_name_details{color: #32805d}
+#logout{margin-bottom: 2px}
+.page_bottom_count{font-size: 16px;color: #2255d9;font-family: "华文中宋"}
+#total_list_page,#total_machine_num{color: #ff6d12;font-family: "黑体";}
+.application_details{margin-bottom: 2px}

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <script src="/static/js/jquery.js"></script>
+    <script src="/static/js/bootstrap.min.js"></script>
+    <script>
+        <!--初始化django模板变量方便js调用-->
+        var data_num = {{ data_num }};
+        var page_num = {{ page_num }};
+        var host = "{{ request.get_host }}";//方便url跳转
+        var path = "{{ request.path }}";
+    </script>
+    <script src="/static/js/first.js"></script>
+</head>
+<body>
+<nav class="navbar navbar-default nav-luban" role="navigation">
+	<div class="container-fluid">
+        <div class="navbar-header">
+            <a class="navbar-brand" href="#" id="nav-title">服务器管理平台</a>
+        </div>
+        <div style="float: left;margin: 0 auto;width:40%;margin-top: 12px;">
+            <div style="float:right;"><span class="glyphicon glyphicon-user" style="padding-right:0px;color:black"></span>
+            <span id="current_user" style="color:black;font-weight: bold;font-size: 18px;margin:0 auto;">{{ request.user }}</span>
+                &nbsp<button class="btn btn-danger btn-xs" id="logout">注销</button>
+             </div>
+        </div>
+        <div class="search-div" style="float:right">
+            <div class="navbar-form navbar-left" role="search" style="padding-right:5px;width: 500px;float:left">
+
+                <div class="form-group" >
+                    <input type="text" class="form-control" value="{{ query_data }}" id="query_value">
+                </div>
+                <button  class="btn btn-sm" id="query">查询</button>
+                <!--添加按钮-->
+                <button class="btn btn-info btn-sm" id="add_machine">添加</button>
+            </div>
+        </div>
+	</div>
+</nav>
+
+<!--修改数据成功弹出框-->
+<div class="alert alert-success" id="alert-modify-success" style="display: none;padding:8px 5px">
+        <strong>成功</strong>&nbsp&nbsp&nbsp<span id="alarm-content-home"></span>
+</div>
+<!--自动获取配置信息的弹出告警框-->
+<div class="alert alert-warning" id="alert-info" style="display: none;padding:8px 5px">
+        <strong>正在自动获取中</strong>&nbsp&nbsp&nbsp<span id="alarm-info-content"></span>
+        <img src="/static/images/loading.gif">
+</div>
+<!--数据显示-->
+<div class="table_data">
+    <table class="table table-hover table-condensed table-bordered">
+        <!--<caption>基本的表格布局</caption>-->
+        <thead align="center">
+            <tr class="active">
+                    <th style="width:30px"></th>
+                    <!--隐藏ID列-->
+                    <th class="table_title" style="display:none">ID</th>
+                    <th class="table_title" style="width:11%">IP地址</th>
+                    <th class="table_title" style="width:11%">Mac地址</th>
+                    <th class="table_title" style="width:11%">CPU信息</th>
+                    <th class="table_title" style="width:11%">内存信息</th>
+                    <th class="table_title" style="width:11%">磁盘信息</th>
+                    <th class="table_title" style="width:11%">操作系统</th>
+                    <th class="table_title" style="width:11%">已部署应用</th>
+                    <th class="table_title" style="width:11%">机器类型</th>
+                    <th class="table_title" style="width:11%">备注</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for line in data %}
+            <tr>
+                {% for row in line %}
+                    <!--给check_box赋值=id-->
+                     {% if forloop.counter == 1 %}
+                         <td align="center" style="vertical-align:middle"><input type="checkbox" name="check_box" value="{{ row }}"></td>
+                         <td style="display: none;">{{ row }}</td>
+                     {% else %}
+                         <td align="center" style="vertical-align:middle">
+                            {% if forloop.counter == 8 %}<!--如果为应用数据，则渲染成按钮方便查看-->
+                                <div class="btn-group">
+                                    {% for app in row %}
+                                        {% if app  %}
+                                            <button type="button" class="btn btn-success btn-xs application_details">
+                                                {{ app }}
+                                            </button>
+                                        {% endif %}
+                                        <div class="query" style="float:left">&nbsp</div> <!--增加按钮间距-->
+                                    {% endfor %}
+                                </div>
+                            {% else %}
+                                {{ row }}
+                            {% endif %}
+                        </td>
+                     {% endif %}
+                {% endfor %}
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</div>
+<div class="btn-group mod_del">
+        <button type="button" class="btn btn-xs" id="choose_all">全选</button>
+        <div class="query" style="float:left">&nbsp</div> <!--增加按钮间距-->
+        <button type="button" class="btn btn-xs" id="unchoose">全不选</button>
+        <div class="query" style="float:left">&nbsp</div> <!--增加按钮间距-->
+        <button type="button" class="btn btn-warning btn-xs button_modify">修改</button>
+        <div class="query" style="float:left">&nbsp</div> <!--增加按钮间距-->
+        <button type="button" class="btn  btn-danger btn-xs button_delete">删除</button>
+        &nbsp &nbsp
+        <span class="page_bottom_count">共</span><a href="#" id="total_list_page" class="page_bottom_count"></a>
+        <span class="page_bottom_count"> 页</span>，
+        <a href="#" id="total_machine_num" class="page_bottom_count"></a><span class="page_bottom_count">台机器</span>
+        <div class="query" style="float:left">&nbsp</div> <!--增加按钮间距--><div class="query" style="float:left">&nbsp</div> <!--增加按钮间距-->
+        <button type="button" class="btn  btn-danger btn-xs button_get_info">更新所选机器配置</button>
+</div>
+{% block modal %}加载修改或添加模态框模板{% endblock %}
+{% block modal_app_details %}加载已部署应用详情模态框模板{% endblock %}
+{% block turn_page %}请加载翻页{% endblock %}
+</body>
+<script src="/static/js/main.js"></script>
+</html>
